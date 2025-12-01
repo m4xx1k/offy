@@ -33,7 +33,7 @@ export function Header() {
         >
           Вхід
         </Button>
-        <Button className="glass-button rounded-full">Опублікувати</Button>
+        <Button className="glass-button rounded-full">Скоро...</Button>
       </div>
     </header>
   );

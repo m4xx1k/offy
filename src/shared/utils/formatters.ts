@@ -1,4 +1,4 @@
-import { formatDistanceToNow } from "date-fns";
+import { formatDistanceToNow, parseISO } from "date-fns";
 import { uk } from "date-fns/locale";
 
 /**
@@ -20,7 +20,11 @@ export const formatSalary = (
  * Форматує дату публікації (наприклад, "2 дні тому").
  */
 export const formatPublishDate = (dateString: string): string => {
-  return formatDistanceToNow(new Date(dateString), {
+  const localDateString = dateString.endsWith("Z")
+    ? dateString.slice(0, -1)
+    : dateString;
+
+  return formatDistanceToNow(new Date(localDateString), {
     addSuffix: true,
     locale: uk,
   });

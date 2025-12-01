@@ -22,7 +22,7 @@ export const VacancyCardInfo = ({ vacancy }: VacancyCardInfoProps) => {
       </div>
 
       {/* Experience Badge */}
-      {vacancy.experienceYears && (
+      {(vacancy.experienceYears || 0) > 0 && (
         <div className="text-xs text-slate-500 px-2">
           {vacancy.experienceYears}+ років
         </div>
