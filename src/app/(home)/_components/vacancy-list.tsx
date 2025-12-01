@@ -24,6 +24,7 @@ export const VacancyList = ({ initialData }: VacancyListProps) => {
   const [hasMore, setHasMore] = useState(initialData.metadata.hasMore);
 
   const loadMore = useCallback(async () => {
+    console.log({ isLoading, hasMore, nextCursor });
     if (isLoading || !hasMore || !nextCursor) return;
 
     setIsLoading(true);
@@ -34,7 +35,7 @@ export const VacancyList = ({ initialData }: VacancyListProps) => {
         cursor: nextCursor,
         take: 10,
       });
-
+      console.log("items", response.items);
       // Додаємо нові вакансії до старих
       setVacancies((prev) => [...prev, ...response.items]);
 

@@ -7,7 +7,7 @@ export function Header() {
     <header className="mb-8 mx-4 md:mx-auto max-w-5xl rounded-2xl glass-panel px-6 py-3 flex items-center justify-between">
       {/* Логотип */}
       <Link href="/" className="hover:text-white transition-colors">
-        <div className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-200 to-purple-200">
+        <div className="text-2xl font-bold bg-clip-text text-transparent bg-linear-to-r from-blue-200 to-purple-200">
           offy
         </div>
       </Link>
