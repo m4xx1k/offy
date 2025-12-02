@@ -7,7 +7,7 @@ export const CompanyCard = ({ company }: { company: IVacancy["company"] }) => {
   return (
     <div className="glass-card p-6 rounded-2xl flex items-center gap-4 group hover:bg-white/5 transition-colors">
       <div className="w-12 h-12 rounded-xl flex items-center justify-center overflow-hidden relative">
-        {company.logoUrl ? (
+        {company && company.logoUrl ? (
           <Image
             src={company.logoUrl}
             alt={company.name}
@@ -22,9 +22,9 @@ export const CompanyCard = ({ company }: { company: IVacancy["company"] }) => {
 
       <div className="flex-1 min-w-0">
         <h3 className="text-lg font-bold text-white truncate group-hover:text-indigo-400 transition-colors">
-          {company.name}
+          {company?.name || "Галєра якась"}
         </h3>
-        {company.website && (
+        {company && company.website && (
           <Link
             href={company.website}
             target="_blank"

@@ -22,7 +22,7 @@ export const VacancyCardHeader = ({
     <div className="flex gap-4 mb-4">
       {/* Logo container: Фіксований розмір, без фону/бордера */}
       <div className="relative shrink-0 w-12 h-12 rounded-lg overflow-hidden">
-        {company.logoUrl && !isCompanyImgError ? (
+        {company && company.logoUrl && !isCompanyImgError ? (
           <Image
             src={company.logoUrl}
             alt={company.name}
@@ -44,7 +44,7 @@ export const VacancyCardHeader = ({
           {title}
         </h3>
         <p className="text-sm text-slate-500 font-medium truncate">
-          {company.name}
+          {company?.name}
         </p>
       </div>
 

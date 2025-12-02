@@ -21,6 +21,7 @@ export const VacancyList = ({ initialData }: VacancyListProps) => {
   );
   // Стейт завантаження
   const [isLoading, setIsLoading] = useState(false);
+  const [total, setTotal] = useState(initialData.total);
   const [hasMore, setHasMore] = useState(initialData.metadata.hasMore);
 
   const loadMore = useCallback(async () => {
@@ -38,7 +39,7 @@ export const VacancyList = ({ initialData }: VacancyListProps) => {
       console.log("items", response.items);
       // Додаємо нові вакансії до старих
       setVacancies((prev) => [...prev, ...response.items]);
-
+      setTotal(response.total);
       // Оновлюємо курсор і статус
       setNextCursor(response.metadata.nextCursor);
       setHasMore(response.metadata.hasMore);
@@ -59,6 +60,11 @@ export const VacancyList = ({ initialData }: VacancyListProps) => {
   return (
     <div className="w-full space-y-4">
       {/* Рендеримо список */}
+      {!!total && (
+        <p className="italic text-sm text-slate-400">
+          Знайдено {total} вакансій =)
+        </p>
+      )}
       <div className="grid grid-cols-1 gap-4">
         {vacancies.map((vacancy) => (
           <VacancyCard key={vacancy.id} vacancy={vacancy} />
