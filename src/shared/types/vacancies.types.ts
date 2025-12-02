@@ -21,7 +21,7 @@ export interface IVacancy {
     name: string;
     website: string | null;
     logoUrl: string | null;
-  };
+  } | null;
   location: {
     id: string;
     city: string | null;

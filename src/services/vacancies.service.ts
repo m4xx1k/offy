@@ -31,6 +31,7 @@ export const vacancyService = {
       // Повертаємо пустий результат, щоб не ламати UI
       return {
         items: [],
+        total: 0,
         metadata: { hasMore: false, nextCursor: null },
       };
     }

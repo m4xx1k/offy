@@ -23,7 +23,7 @@ export async function generateMetadata({
   if (!vacancy) return { title: "Вакансія не знайдена" };
 
   return {
-    title: `${vacancy.title} at ${vacancy.company.name}`,
+    title: `${vacancy.title} at ${vacancy.company?.name}`,
     description: `Вакансія ${vacancy.title}. Зарплата: ${
       vacancy.salaryFrom || "DOGOVIRNA"
     }.`,
