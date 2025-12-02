@@ -1,6 +1,6 @@
 import { api } from "@/lib/api"; // Твій аксіос інстанс або fetch враппер
 import { IPaginatedResult } from "@/shared/types/pagination.types";
-import { IVacancy } from "@/shared/types/vacancies.types";
+import { IVacancy, WorkFormatType } from "@/shared/types/vacancies.types";
 
 export const vacancyService = {
   async getById(id: string): Promise<IVacancy | null> {
@@ -17,13 +17,22 @@ export const vacancyService = {
   async getPaginated(params: {
     cursor?: string | null;
     take?: number;
+
+    search?: string;
+
+    skills?: string[];
+
+    workFormat?: WorkFormatType;
+
+    location?: string;
+
+    salaryMin?: number;
+
+    salaryMax?: number;
   }): Promise<IPaginatedResult<IVacancy>> {
     try {
       const { data } = await api.get<IPaginatedResult<IVacancy>>("/vacancies", {
-        params: {
-          cursor: params.cursor,
-          take: params.take,
-        },
+        params,
       });
       return data;
     } catch (error) {
@@ -35,5 +44,22 @@ export const vacancyService = {
         metadata: { hasMore: false, nextCursor: null },
       };
     }
+  },
+  async getFiltersData() {
+    return (
+      await api.get<{
+        skills: {
+          id: string;
+          name: string;
+          normalizedName: string;
+        }[];
+        locations: {
+          id: string;
+          normalizedName: string;
+          city: string;
+          country: string;
+        }[];
+      }>("/vacancies/filters")
+    ).data;
   },
 };

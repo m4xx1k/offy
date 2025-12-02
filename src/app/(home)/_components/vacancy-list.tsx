@@ -7,6 +7,8 @@ import { IPaginatedResult } from "@/shared/types/pagination.types";
 import { vacancyService } from "@/services/vacancies.service";
 import { VacancyCard } from "./vacancy-card"; // Твоя картка
 import { useIntersectionObserver } from "@/hooks/intersection-observer";
+import { useVacancyFiltersStrore } from "@/hooks/vacancy-filters";
+import { VacancyFiltersSidebar } from "./vacancy-filter-sidebar";
 
 interface VacancyListProps {
   initialData: IPaginatedResult<IVacancy>;
@@ -23,6 +25,8 @@ export const VacancyList = ({ initialData }: VacancyListProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [total, setTotal] = useState(initialData.total);
   const [hasMore, setHasMore] = useState(initialData.metadata.hasMore);
+  const { search, location, skills, salaryMax, salaryMin, workFormat } =
+    useVacancyFiltersStrore();
 
   const loadMore = useCallback(async () => {
     console.log({ isLoading, hasMore, nextCursor });
@@ -32,11 +36,18 @@ export const VacancyList = ({ initialData }: VacancyListProps) => {
 
     try {
       // Фетчимо нову порцію
-      const response = await vacancyService.getPaginated({
+      const req = {
         cursor: nextCursor,
         take: 10,
-      });
-      console.log("items", response.items);
+        ...(search && { search }),
+        ...(location && { location }),
+        ...(skills && { skills }),
+        ...(salaryMax && { salaryMax }),
+        ...(salaryMin && { salaryMin }),
+        ...(workFormat && { workFormat }),
+      };
+      const response = await vacancyService.getPaginated(req);
+      console.log("items", req, response.items);
       // Додаємо нові вакансії до старих
       setVacancies((prev) => [...prev, ...response.items]);
       setTotal(response.total);
@@ -48,7 +59,17 @@ export const VacancyList = ({ initialData }: VacancyListProps) => {
     } finally {
       setIsLoading(false);
     }
-  }, [nextCursor, hasMore, isLoading]);
+  }, [
+    nextCursor,
+    hasMore,
+    isLoading,
+    search,
+    location,
+    skills,
+    salaryMax,
+    salaryMin,
+    workFormat,
+  ]);
 
   // Підключаємо обсервер
   const observerRef = useIntersectionObserver({
@@ -71,19 +92,21 @@ export const VacancyList = ({ initialData }: VacancyListProps) => {
         ))}
       </div>
 
-      {/* Лоадер / Тригер */}
-      {(hasMore || isLoading) && (
-        <div ref={observerRef} className="flex justify-center py-6">
-          <Loader2 className="w-8 h-8 animate-spin text-indigo-400" />
-        </div>
-      )}
+        {/* Лоадер / Тригер */}
+        {(hasMore || isLoading) && (
+          <div ref={observerRef} className="flex justify-center py-6">
+            <Loader2 className="w-8 h-8 animate-spin text-indigo-400" />
+          </div>
+        )}
 
-      {/* Кінець списку */}
-      {!hasMore && vacancies.length > 0 && (
-        <div className="text-center py-8 text-slate-500">
-          Ви переглянули всі вакансії 🎉
-        </div>
-      )}
+        {/* Кінець списку */}
+        {!hasMore && vacancies.length > 0 && (
+          <div className="text-center py-8 text-slate-500">
+            Ви переглянули всі вакансії 🎉
+          </div>
+        )}
+      </div>
+      <VacancyFiltersSidebar />
     </div>
   );
 };
