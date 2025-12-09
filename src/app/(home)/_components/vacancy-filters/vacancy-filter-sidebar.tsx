@@ -7,7 +7,7 @@ import {
   SearchFilter,
   SkillsFilter,
   WorkFormatFilter,
-} from "./vacancy-filterss";
+} from "./vacancy-filters";
 import { vacancyService } from "@/services/vacancies.service";
 import { cn } from "@/lib/utils";
 import { SlidersHorizontal, X } from "lucide-react";
@@ -41,7 +41,7 @@ export const VacancyFiltersSidebar = ({
   }, []);
 
   return (
-    <aside className={cn("w-full md:w-[280px] shrink-0 space-y-6", className)}>
+    <aside className={cn("w-[300px] shrink-0 space-y-6", className)}>
       <div className="glass-panel p-6 rounded-3xl space-y-8 sticky top-4">
         {/* Header */}
         <div className="flex items-center justify-between pb-4 border-b border-white/5">

@@ -12,11 +12,8 @@ interface VacancyCardProps {
 
 export const VacancyCard = ({ vacancy }: VacancyCardProps) => {
   return (
-    <Link
-      href={`/vacancy/${vacancy.id}`}
-      className="group block w-full outline-none"
-    >
-      <div className="glass-card relative p-5 rounded-2xl border border-white/5 bg-white/5 hover:bg-white/[0.07] hover:border-white/10 transition-all duration-300 h-full flex flex-col">
+    <Link href={`/vacancy/${vacancy.id}`} className="group outline-none">
+      <div className="glass-card relative p-5 rounded-2xl border border-white/5 bg-white/5 hover:bg-white/[0.07] hover:border-white/10 transition-all duration-300 flex flex-col">
         <VacancyCardHeader
           title={vacancy.title}
           company={vacancy.company}

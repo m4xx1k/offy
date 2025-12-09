@@ -46,7 +46,7 @@ export const VacancyMeta = ({ vacancy }: { vacancy: IVacancy }) => {
         />
         <MetaItem
           label="Локація"
-          value={vacancy.location?.city || "Remote"}
+          value={vacancy.locations.at(0)?.location?.city || "Remote"}
           Icon={MapPin}
         />
         <MetaItem

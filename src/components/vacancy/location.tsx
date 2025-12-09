@@ -4,7 +4,7 @@ import { capitalize } from "@/shared/utils/text.utils";
 import { MapPin, Globe, Building2 } from "lucide-react";
 
 export const VacancyLocation = ({ vacancy }: { vacancy: IVacancy }) => {
-  const city = vacancy.location?.city;
+  const city = vacancy.locations.at(0)?.location?.city;
   const format = vacancy.workFormat; // 'office' | 'remote' | 'hybrid'
 
   // Логіка відображення

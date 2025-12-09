@@ -5,6 +5,7 @@ import { FilterSection } from "./vacancy-filter-section";
 import { WorkFormat } from "@/shared/types/vacancies.types";
 import { LiquidCheckbox } from "@/components/ui/liquid/checkbox";
 import { useState } from "react";
+import { useDebounce } from "@/hooks/use-debounce";
 // 1. Типи та допоміжні інтерфейси
 export interface FilterOptionsState {
   skills: { id: string; name: string; normalizedName: string }[];
@@ -14,7 +15,6 @@ export interface FilterOptionsState {
 export const SearchFilter = () => {
   const search = useVacancyFiltersStrore((state) => state.search);
   const setSearch = useVacancyFiltersStrore((state) => state.setSearch);
-
   return (
     <div className="relative group">
       <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 group-focus-within:text-indigo-400 transition-colors" />

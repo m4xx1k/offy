@@ -16,24 +16,29 @@ export interface IVacancy {
   sourceId: string;
   sourceUrl: string;
   postedAt: string;
-  company: {
-    id: string;
-    name: string;
-    website: string | null;
-    logoUrl: string | null;
-  } | null;
-  location: {
-    id: string;
-    city: string | null;
-    country: string | null;
-  } | null;
+  company: Company | null;
+  locations: {
+    location: Location;
+  }[];
   skills: {
-    skill: {
-      id: string;
-      name: string;
-    };
+    skill: Skill;
   }[];
 }
+export type Location = {
+  id: string;
+  city: string | null;
+  country: string | null;
+};
+export type Company = {
+  id: string;
+  name: string;
+  website: string | null;
+  logoUrl: string | null;
+};
+export type Skill = {
+  id: string;
+  name: string;
+};
 export const WorkFormat = {
   REMOTE: "REMOTE",
   OFFICE: "OFFICE",
