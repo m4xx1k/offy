@@ -1,6 +1,6 @@
 // components/header.tsx
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export function Header() {
   return (
@@ -14,13 +14,13 @@ export function Header() {
 
       {/* Навігація */}
       <nav className="hidden md:flex gap-6 text-sm font-medium text-slate-200">
-        <Link href="#" className="hover:text-white transition-colors">
+        <Link href="/" className="hover:text-white transition-colors">
           Вакансії
         </Link>
-        <Link href="#" className="hover:text-white transition-colors">
+        <Link href="/analytics" className="hover:text-white transition-colors">
           Компанії
         </Link>
-        <Link href="#" className="hover:text-white transition-colors">
+        <Link href="/analytics" className="hover:text-white transition-colors">
           Аналітика
         </Link>
       </nav>
