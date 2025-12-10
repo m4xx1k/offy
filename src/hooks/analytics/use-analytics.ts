@@ -1,0 +1,108 @@
+"use client";
+
+import { useQuery } from "@tanstack/react-query";
+import { analyticsService } from "@/services/analytics.service";
+import { AnalyticsQuery } from "@/shared/types/analytics.types";
+
+export const analyticsKeys = {
+  all: ["analytics"] as const,
+  overview: () => [...analyticsKeys.all, "overview"] as const,
+  sources: () => [...analyticsKeys.all, "sources"] as const,
+  daily: (query?: AnalyticsQuery) =>
+    [...analyticsKeys.all, "daily", query] as const,
+  descriptions: (source?: string) =>
+    [...analyticsKeys.all, "descriptions", source] as const,
+  workFormats: (source?: string) =>
+    [...analyticsKeys.all, "work-formats", source] as const,
+  topCompanies: (query?: AnalyticsQuery) =>
+    [...analyticsKeys.all, "top-companies", query] as const,
+  topLocations: (query?: AnalyticsQuery) =>
+    [...analyticsKeys.all, "top-locations", query] as const,
+  englishLevels: (source?: string) =>
+    [...analyticsKeys.all, "english-levels", source] as const,
+  experience: (source?: string) =>
+    [...analyticsKeys.all, "experience", source] as const,
+  salaries: (source?: string) =>
+    [...analyticsKeys.all, "salaries", source] as const,
+};
+
+export function useOverview() {
+  return useQuery({
+    queryKey: analyticsKeys.overview(),
+    queryFn: () => analyticsService.getOverview(),
+    staleTime: 1000 * 60 * 5, // 5 хвилин
+  });
+}
+
+export function useSourceStats() {
+  return useQuery({
+    queryKey: analyticsKeys.sources(),
+    queryFn: () => analyticsService.getSourceStats(),
+    staleTime: 1000 * 60 * 5,
+  });
+}
+
+export function useDailyStats(query?: AnalyticsQuery) {
+  return useQuery({
+    queryKey: analyticsKeys.daily(query),
+    queryFn: () => analyticsService.getDailyStats(query),
+    staleTime: 1000 * 60 * 5,
+  });
+}
+
+export function useDescriptionStats(source?: string) {
+  return useQuery({
+    queryKey: analyticsKeys.descriptions(source),
+    queryFn: () => analyticsService.getDescriptionStats(source),
+    staleTime: 1000 * 60 * 5,
+  });
+}
+
+export function useWorkFormatStats(source?: string) {
+  return useQuery({
+    queryKey: analyticsKeys.workFormats(source),
+    queryFn: () => analyticsService.getWorkFormatStats(source),
+    staleTime: 1000 * 60 * 5,
+  });
+}
+
+export function useTopCompanies(query?: AnalyticsQuery) {
+  return useQuery({
+    queryKey: analyticsKeys.topCompanies(query),
+    queryFn: () => analyticsService.getTopCompanies(query),
+    staleTime: 1000 * 60 * 5,
+  });
+}
+
+export function useTopLocations(query?: AnalyticsQuery) {
+  return useQuery({
+    queryKey: analyticsKeys.topLocations(query),
+    queryFn: () => analyticsService.getTopLocations(query),
+    staleTime: 1000 * 60 * 5,
+  });
+}
+
+export function useEnglishLevelStats(source?: string) {
+  return useQuery({
+    queryKey: analyticsKeys.englishLevels(source),
+    queryFn: () => analyticsService.getEnglishLevelStats(source),
+    staleTime: 1000 * 60 * 5,
+  });
+}
+
+export function useExperienceStats(source?: string) {
+  return useQuery({
+    queryKey: analyticsKeys.experience(source),
+    queryFn: () => analyticsService.getExperienceStats(source),
+    staleTime: 1000 * 60 * 5,
+  });
+}
+
+export function useSalaryStats(source?: string) {
+  return useQuery({
+    queryKey: analyticsKeys.salaries(source),
+    queryFn: () => analyticsService.getSalaryStats(source),
+    staleTime: 1000 * 60 * 5,
+  });
+}
+
