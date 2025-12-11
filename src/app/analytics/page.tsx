@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  analyticsKeys,
   DailyStatsChart,
   DescriptionStats,
   EnglishLevelChart,
@@ -11,8 +12,7 @@ import {
   TopCompaniesTable,
   TopLocationsTable,
   WorkFormatChart,
-} from "@/components/analytics";
-import { analyticsKeys } from "@/hooks/analytics/use-analytics";
+} from "@/features/analytics";
 import { useQueryClient } from "@tanstack/react-query";
 import { BarChart3, RefreshCw } from "lucide-react";
 import { useState } from "react";
