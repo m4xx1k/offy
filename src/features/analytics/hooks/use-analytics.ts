@@ -1,9 +1,10 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { analyticsService } from "@/services/analytics.service";
-import { AnalyticsQuery } from "@/shared/types/analytics.types";
+import { analyticsService } from "../api/analytics.service";
+import type { AnalyticsQuery } from "../types";
 
+// Query keys для React Query
 export const analyticsKeys = {
   all: ["analytics"] as const,
   overview: () => [...analyticsKeys.all, "overview"] as const,
@@ -26,11 +27,13 @@ export const analyticsKeys = {
     [...analyticsKeys.all, "salaries", source] as const,
 };
 
+const STALE_TIME = 1000 * 60 * 5; // 5 хвилин
+
 export function useOverview() {
   return useQuery({
     queryKey: analyticsKeys.overview(),
     queryFn: () => analyticsService.getOverview(),
-    staleTime: 1000 * 60 * 5, // 5 хвилин
+    staleTime: STALE_TIME,
   });
 }
 
@@ -38,7 +41,7 @@ export function useSourceStats() {
   return useQuery({
     queryKey: analyticsKeys.sources(),
     queryFn: () => analyticsService.getSourceStats(),
-    staleTime: 1000 * 60 * 5,
+    staleTime: STALE_TIME,
   });
 }
 
@@ -46,7 +49,7 @@ export function useDailyStats(query?: AnalyticsQuery) {
   return useQuery({
     queryKey: analyticsKeys.daily(query),
     queryFn: () => analyticsService.getDailyStats(query),
-    staleTime: 1000 * 60 * 5,
+    staleTime: STALE_TIME,
   });
 }
 
@@ -54,7 +57,7 @@ export function useDescriptionStats(source?: string) {
   return useQuery({
     queryKey: analyticsKeys.descriptions(source),
     queryFn: () => analyticsService.getDescriptionStats(source),
-    staleTime: 1000 * 60 * 5,
+    staleTime: STALE_TIME,
   });
 }
 
@@ -62,7 +65,7 @@ export function useWorkFormatStats(source?: string) {
   return useQuery({
     queryKey: analyticsKeys.workFormats(source),
     queryFn: () => analyticsService.getWorkFormatStats(source),
-    staleTime: 1000 * 60 * 5,
+    staleTime: STALE_TIME,
   });
 }
 
@@ -70,7 +73,7 @@ export function useTopCompanies(query?: AnalyticsQuery) {
   return useQuery({
     queryKey: analyticsKeys.topCompanies(query),
     queryFn: () => analyticsService.getTopCompanies(query),
-    staleTime: 1000 * 60 * 5,
+    staleTime: STALE_TIME,
   });
 }
 
@@ -78,7 +81,7 @@ export function useTopLocations(query?: AnalyticsQuery) {
   return useQuery({
     queryKey: analyticsKeys.topLocations(query),
     queryFn: () => analyticsService.getTopLocations(query),
-    staleTime: 1000 * 60 * 5,
+    staleTime: STALE_TIME,
   });
 }
 
@@ -86,7 +89,7 @@ export function useEnglishLevelStats(source?: string) {
   return useQuery({
     queryKey: analyticsKeys.englishLevels(source),
     queryFn: () => analyticsService.getEnglishLevelStats(source),
-    staleTime: 1000 * 60 * 5,
+    staleTime: STALE_TIME,
   });
 }
 
@@ -94,7 +97,7 @@ export function useExperienceStats(source?: string) {
   return useQuery({
     queryKey: analyticsKeys.experience(source),
     queryFn: () => analyticsService.getExperienceStats(source),
-    staleTime: 1000 * 60 * 5,
+    staleTime: STALE_TIME,
   });
 }
 
@@ -102,7 +105,7 @@ export function useSalaryStats(source?: string) {
   return useQuery({
     queryKey: analyticsKeys.salaries(source),
     queryFn: () => analyticsService.getSalaryStats(source),
-    staleTime: 1000 * 60 * 5,
+    staleTime: STALE_TIME,
   });
 }
 
