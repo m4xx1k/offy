@@ -1,0 +1,244 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { Cell, Pie, PieChart, ResponsiveContainer, Sector } from "recharts";
+
+import { useWorkFormatStats } from "@/entities/analytics";
+import { WORK_FORMAT_COLORS, WORK_FORMAT_LABELS } from "@/shared/config/constants";
+import { ChartCard, ChartCardSkeleton } from "../common";
+
+interface SectorShapeProps {
+  cx: number;
+  cy: number;
+  innerRadius: number;
+  outerRadius: number;
+  startAngle: number;
+  endAngle: number;
+  fill: string;
+  payload: { name: string };
+  percent: number;
+  value: number;
+  isActive: boolean;
+}
+
+function renderSectorShape(props: SectorShapeProps) {
+  const {
+    cx,
+    cy,
+    innerRadius,
+    outerRadius,
+    startAngle,
+    endAngle,
+    fill,
+    payload,
+    percent,
+    value,
+    isActive,
+  } = props;
+
+  if (isActive) {
+    return (
+      <g>
+        {/* Glow ефект */}
+        <Sector
+          cx={cx}
+          cy={cy}
+          innerRadius={innerRadius - 4}
+          outerRadius={outerRadius + 8}
+          startAngle={startAngle}
+          endAngle={endAngle}
+          fill={fill}
+          opacity={0.3}
+          style={{ filter: "blur(8px)" }}
+        />
+        {/* Основний сектор */}
+        <Sector
+          cx={cx}
+          cy={cy}
+          innerRadius={innerRadius}
+          outerRadius={outerRadius + 6}
+          startAngle={startAngle}
+          endAngle={endAngle}
+          fill={fill}
+        />
+        {/* Внутрішнє кільце */}
+        <Sector
+          cx={cx}
+          cy={cy}
+          startAngle={startAngle}
+          endAngle={endAngle}
+          innerRadius={innerRadius - 4}
+          outerRadius={innerRadius - 2}
+          fill={fill}
+        />
+        {/* Центральний текст */}
+        <text
+          x={cx}
+          y={cy - 8}
+          textAnchor="middle"
+          fill="#fff"
+          className="text-lg font-bold"
+        >
+          {payload.name}
+        </text>
+        <text
+          x={cx}
+          y={cy + 14}
+          textAnchor="middle"
+          fill="#94a3b8"
+          className="text-sm"
+        >
+          {`${(percent * 100).toFixed(0)}% (${value.toLocaleString()})`}
+        </text>
+      </g>
+    );
+  }
+
+  return (
+    <Sector
+      cx={cx}
+      cy={cy}
+      innerRadius={innerRadius}
+      outerRadius={outerRadius}
+      startAngle={startAngle}
+      endAngle={endAngle}
+      fill={fill}
+    />
+  );
+}
+
+export function WorkFormatChart() {
+  const { data, isLoading, error } = useWorkFormatStats();
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const chartData = useMemo(() => {
+    if (!data) return [];
+
+    // Агрегуємо по формату роботи (об'єднуємо джерела)
+    const aggregated = new Map<string | null, number>();
+
+    for (const item of data) {
+      const key = item.workFormat;
+      const current = aggregated.get(key) || 0;
+      aggregated.set(key, current + item.count);
+    }
+
+    return Array.from(aggregated.entries()).map(([format, count]) => ({
+      name: WORK_FORMAT_LABELS[String(format)] || format || "Не вказано",
+      value: count,
+      format: format,
+    }));
+  }, [data]);
+
+  const total = chartData.reduce((acc, item) => acc + item.value, 0);
+
+  if (error) {
+    return (
+      <ChartCard title="Формати роботи">
+        <div className="text-rose-400 text-center py-8">
+          Помилка завантаження даних
+        </div>
+      </ChartCard>
+    );
+  }
+
+  if (isLoading) {
+    return <ChartCardSkeleton height="h-72" />;
+  }
+
+  return (
+    <ChartCard
+      title="Формати роботи"
+      subtitle="Розподіл по типах зайнятості"
+    >
+      <div className="flex flex-col md:flex-row items-center gap-6">
+        <ResponsiveContainer width="100%" height={260} className="md:w-1/2">
+          <PieChart>
+            <Pie
+              data={chartData}
+              cx="50%"
+              cy="50%"
+              innerRadius={65}
+              outerRadius={95}
+              paddingAngle={4}
+              dataKey="value"
+              shape={(props: unknown) =>
+                renderSectorShape({
+                  ...(props as SectorShapeProps),
+                  isActive:
+                    (props as { index: number }).index === activeIndex,
+                })
+              }
+            >
+              {chartData.map((entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={WORK_FORMAT_COLORS[String(entry.format)] || "#64748b"}
+                  stroke="transparent"
+                  className="transition-all duration-300 cursor-pointer"
+                  onMouseEnter={() => setActiveIndex(index)}
+                />
+              ))}
+            </Pie>
+          </PieChart>
+        </ResponsiveContainer>
+
+        <div className="flex-1 space-y-3 w-full md:w-auto">
+          {chartData.map((item, index) => {
+            const percentage = Math.round((item.value / total) * 100);
+            const isActive = index === activeIndex;
+            return (
+              <div
+                key={item.name}
+                className={`flex items-center gap-3 p-2 rounded-lg transition-all cursor-pointer ${
+                  isActive ? "bg-white/5" : "hover:bg-white/5"
+                }`}
+                onMouseEnter={() => setActiveIndex(index)}
+              >
+                <div
+                  className={`w-3 h-3 rounded-full transition-transform ${
+                    isActive ? "scale-125" : ""
+                  }`}
+                  style={{
+                    backgroundColor:
+                      WORK_FORMAT_COLORS[String(item.format)] || "#64748b",
+                    boxShadow: isActive
+                      ? `0 0 12px ${
+                          WORK_FORMAT_COLORS[String(item.format)] || "#64748b"
+                        }`
+                      : "none",
+                  }}
+                />
+                <div className="flex-1">
+                  <div className="flex justify-between items-center mb-1">
+                    <span
+                      className={`text-sm ${
+                        isActive ? "text-white font-medium" : "text-slate-300"
+                      }`}
+                    >
+                      {item.name}
+                    </span>
+                    <span className="text-sm font-medium text-white">
+                      {percentage}%
+                    </span>
+                  </div>
+                  <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
+                    <div
+                      className="h-full rounded-full transition-all duration-500"
+                      style={{
+                        width: `${percentage}%`,
+                        backgroundColor:
+                          WORK_FORMAT_COLORS[String(item.format)] || "#64748b",
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </ChartCard>
+  );
+}
+

@@ -41,6 +41,16 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  /* Liquid Glass Colors */
+  --color-glass-bg: var(--glass-bg);
+  --color-glass-border: var(--glass-border);
+  --color-glass-hover: var(--glass-hover);
+  --color-glass-accent: var(--glass-accent);
+  --color-glass-accent-hover: var(--glass-accent-hover);
+  --color-glass-text: var(--glass-text);
+  --color-glass-text-muted: var(--glass-text-muted);
+  --color-glass-text-subtle: var(--glass-text-subtle);
 }
 
 :root {
@@ -76,6 +86,16 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  /* Liquid Glass - Light Mode */
+  --glass-bg: oklch(0 0 0 / 20%);
+  --glass-border: oklch(1 0 0 / 10%);
+  --glass-hover: oklch(1 0 0 / 5%);
+  --glass-accent: oklch(0.585 0.233 264);
+  --glass-accent-hover: oklch(0.637 0.237 264);
+  --glass-text: oklch(0.985 0 0);
+  --glass-text-muted: oklch(0.704 0.04 264);
+  --glass-text-subtle: oklch(0.556 0.046 257);
 }
 
 .dark {
@@ -110,6 +130,16 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+
+  /* Liquid Glass - Dark Mode */
+  --glass-bg: oklch(0 0 0 / 20%);
+  --glass-border: oklch(1 0 0 / 10%);
+  --glass-hover: oklch(1 0 0 / 5%);
+  --glass-accent: oklch(0.585 0.233 264);
+  --glass-accent-hover: oklch(0.637 0.237 264);
+  --glass-text: oklch(0.985 0 0);
+  --glass-text-muted: oklch(0.704 0.04 264);
+  --glass-text-subtle: oklch(0.556 0.046 257);
 }
 
 @layer base {
@@ -117,7 +147,7 @@
     @apply border-border outline-ring/50;
   }
   body {
-    background-color: #0f172a; /* Темний фон */
+    background-color: #0f172a;
     background-image: radial-gradient(
         at 0% 0%,
         hsla(253, 16%, 7%, 1) 0,
@@ -129,27 +159,27 @@
     @apply text-slate-200;
   }
 }
+
 @layer utilities {
   .glass-panel,
   .glass-card {
-    /* Темна напівпрозора основа */
-    @apply bg-black/20 backdrop-blur-xl;
-    @apply border border-white/10;
+    @apply bg-glass-bg backdrop-blur-xl;
+    @apply border border-glass-border;
     @apply shadow-xl;
   }
 
   .glass-card {
     @apply transition-all duration-300;
-    @apply hover:bg-white/5; /* Трохи світліше при ховері */
+    @apply hover:bg-glass-hover;
     @apply hover:-translate-y-1;
     @apply hover:shadow-2xl hover:shadow-indigo-500/10;
   }
 
   .glass-button {
-    @apply bg-indigo-600/80 hover:bg-indigo-500;
+    @apply bg-glass-accent hover:bg-glass-accent-hover;
     @apply backdrop-blur-md border border-white/20;
     @apply shadow-lg shadow-indigo-500/20;
-    @apply text-white font-medium;
+    @apply text-glass-text font-medium;
     @apply transition-all duration-300;
   }
 }
