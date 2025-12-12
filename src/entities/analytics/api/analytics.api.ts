@@ -11,7 +11,9 @@ import type {
   SalaryStats,
   SourceStats,
   WorkFormatStats,
+  IngestAudit,
 } from "../model/types";
+import { PaginatedResult } from "@/entities/vacancy";
 
 const BASE_PATH = "/ingest/analytics";
 
@@ -87,5 +89,18 @@ export const analyticsApi = {
     });
     return data;
   },
-};
 
+  // Cursor-paginated audit history
+  async getAuditHistory(
+    cursor?: string | null,
+    limit: number = 20
+  ): Promise<PaginatedResult<IngestAudit>> {
+    const { data } = await api.get<PaginatedResult<IngestAudit>>(
+      `/audit/history`,
+      {
+        params: { cursor, limit },
+      }
+    );
+    return data;
+  },
+};
