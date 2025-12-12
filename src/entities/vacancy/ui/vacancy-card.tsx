@@ -72,10 +72,7 @@ export function VacancyCard({ vacancy }: VacancyCardProps) {
             salaryTo={vacancy.salaryTo}
             currency={vacancy.currency}
           />
-          <VacancyLocation
-            locations={vacancy.locations}
-            workFormat={vacancy.workFormat}
-          />
+          <VacancyLocation vacancy={vacancy} />
           <VacancyEnglishLevel level={vacancy.englishLevel} format="cefr" />
           <VacancyExperience years={vacancy.experienceYears} />
         </div>
@@ -86,4 +83,3 @@ export function VacancyCard({ vacancy }: VacancyCardProps) {
     </Link>
   );
 }
-

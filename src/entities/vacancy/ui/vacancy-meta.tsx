@@ -37,7 +37,8 @@ interface VacancyMetaProps {
 }
 
 export function VacancyMeta({ vacancy }: VacancyMetaProps) {
-  const city = formatCity(vacancy.locations);
+  const locations = vacancy.locations?.map((vacancyLoc) => vacancyLoc.location);
+  const city = formatCity(locations);
 
   return (
     <GlassCard padding="md" rounded="2xl" className="flex flex-col gap-6">
@@ -65,4 +66,3 @@ export function VacancyMeta({ vacancy }: VacancyMetaProps) {
     </GlassCard>
   );
 }
-

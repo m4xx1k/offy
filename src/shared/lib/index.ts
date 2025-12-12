@@ -4,5 +4,4 @@
 
 export * from "./formatters";
 export * from "./utils";
-export * from "./hooks";
-
+export * from "./intersection-observer";

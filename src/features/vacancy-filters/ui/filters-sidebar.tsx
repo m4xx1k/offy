@@ -6,7 +6,6 @@ import { GlassCard, GlassButton } from "@/shared/ui";
 import { useVacancyFiltersStore } from "../model/filters.store";
 import { useFiltersData } from "../model/use-filters-data";
 import { FiltersSkeleton } from "./filters-skeleton";
-import { SearchFilter } from "./search-filter";
 import { SalaryFilter } from "./salary-filter";
 import { WorkFormatFilter } from "./work-format-filter";
 import { SkillsFilter } from "./skills-filter";
@@ -21,9 +20,8 @@ export function FiltersSidebar({ className }: FiltersSidebarProps) {
   const { data: filtersData, isLoading } = useFiltersData();
 
   return (
-    <aside className={cn("w-[300px] shrink-0 space-y-6", className)}>
-      <GlassCard padding="md" rounded="3xl" className="sticky top-4 space-y-8">
-        {/* Header */}
+    <aside className={cn("w-full shrink-0", className)}>
+      <GlassCard padding="md" rounded="3xl" className="space-y-8">
         <div className="flex items-center justify-between pb-4 border-b border-glass-border">
           <div className="flex items-center gap-2 text-glass-text">
             <SlidersHorizontal className="w-5 h-5 text-glass-accent" />
@@ -41,7 +39,6 @@ export function FiltersSidebar({ className }: FiltersSidebarProps) {
 
         {/* Content */}
         <div className="space-y-6">
-          <SearchFilter />
           <WorkFormatFilter />
           <SalaryFilter />
 
@@ -54,16 +51,7 @@ export function FiltersSidebar({ className }: FiltersSidebarProps) {
             </>
           )}
         </div>
-
-        {/* Mobile Apply Button */}
-        <GlassButton
-          className="w-full md:hidden"
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        >
-          Застосувати
-        </GlassButton>
       </GlassCard>
     </aside>
   );
 }
-

@@ -22,7 +22,7 @@ export function SalaryFilter() {
             onChange={(e) =>
               setSalaryMin(e.target.value ? Number(e.target.value) : null)
             }
-            className="pl-8 text-right"
+            className="pl-8 text-left"
           />
         </div>
         <span className="text-glass-text-subtle">-</span>
@@ -37,11 +37,10 @@ export function SalaryFilter() {
             onChange={(e) =>
               setSalaryMax(e.target.value ? Number(e.target.value) : null)
             }
-            className="pl-8 text-right"
+            className="pl-8 text-left"
           />
         </div>
       </div>
     </FilterSection>
   );
 }
-

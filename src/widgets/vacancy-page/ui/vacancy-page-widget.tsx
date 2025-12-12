@@ -21,14 +21,12 @@ export function VacancyPageWidget({ vacancy }: VacancyPageWidgetProps) {
       <VacancyHeader vacancy={vacancy} />
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* ЛІВА КОЛОНКА */}
         <div className="lg:col-span-8 space-y-6">
           <VacancyDescription
             content={vacancy.descriptionMd || vacancy.description}
           />
         </div>
 
-        {/* ПРАВА КОЛОНКА */}
         <div className="lg:col-span-4 space-y-6 sticky top-6 h-fit">
           <CompanyCard company={vacancy.company} />
           <VacancyMeta vacancy={vacancy} />
@@ -39,4 +37,3 @@ export function VacancyPageWidget({ vacancy }: VacancyPageWidgetProps) {
     </div>
   );
 }
-

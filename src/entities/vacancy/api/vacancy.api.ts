@@ -7,6 +7,7 @@ const BASE_PATH = "/vacancies";
 export interface VacanciesQuery {
   take?: number;
   skip?: number;
+  cursor?: string; // <--- ДОДАЄМО ЦЕ
   search?: string;
   workFormat?: string;
   salaryMin?: number;
@@ -40,9 +41,13 @@ export const vacancyApi = {
    */
   async getList(query?: VacanciesQuery): Promise<PaginatedResult<IVacancy>> {
     try {
-      const { data } = await api.get<PaginatedResult<IVacancy>>(BASE_PATH, {
-        params: query,
-      });
+      const { data, config } = await api.get<PaginatedResult<IVacancy>>(
+        BASE_PATH,
+        {
+          params: query,
+        }
+      );
+      console.log("config", config.url);
       return {
         ...data,
         hasMore: data.metadata?.hasMore ?? false,
@@ -98,4 +103,3 @@ export const vacancyApi = {
     }
   },
 };
-

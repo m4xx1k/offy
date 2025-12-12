@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { GlassCheckbox, GlassInput } from "@/shared/ui";
+import { GlassCheckbox, GlassInput, ScrollArea } from "@/shared/ui";
 import { useVacancyFiltersStore } from "../model/filters.store";
 import { FilterSection } from "./filter-section";
 import type { FiltersData } from "@/entities/vacancy";
@@ -21,10 +21,7 @@ export function SkillsFilter({ options }: SkillsFilterProps) {
   );
 
   return (
-    <FilterSection
-      title="Навички"
-      className="flex flex-col h-full max-h-[200px]"
-    >
+    <FilterSection title="Навички" className="flex flex-col h-full max-h-64">
       <GlassInput
         placeholder="Фільтр навичок..."
         inputSize="sm"
@@ -32,10 +29,11 @@ export function SkillsFilter({ options }: SkillsFilterProps) {
         value={localSearch}
         onChange={(e) => setLocalSearch(e.target.value)}
       />
-      <div className="overflow-y-auto pr-2 space-y-2 scrollbar-thin scrollbar-thumb-glass-border scrollbar-track-transparent">
+      <ScrollArea className="h-44 px-2">
         {filteredOptions.length > 0 ? (
           filteredOptions.map((skill) => (
             <GlassCheckbox
+              className="mt-2"
               key={skill.id}
               label={skill.name}
               checked={selectedSkills.includes(skill.name)}
@@ -47,8 +45,7 @@ export function SkillsFilter({ options }: SkillsFilterProps) {
             Не знайдено
           </p>
         )}
-      </div>
+      </ScrollArea>
     </FilterSection>
   );
 }
-

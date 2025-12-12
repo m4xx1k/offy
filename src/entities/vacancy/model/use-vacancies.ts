@@ -1,30 +1,51 @@
 "use client";
 
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { vacancyApi, type VacanciesQuery } from "../api/vacancy.api";
+import {
+  PaginatedResult,
+  vacancyApi,
+  type VacanciesQuery,
+} from "../api/vacancy.api";
 import { vacancyKeys } from "./query-keys";
+import { IVacancy } from "./types";
 
 interface UseVacanciesOptions {
   filters?: VacanciesQuery;
-  initialData?: Awaited<ReturnType<typeof vacancyApi.getList>>;
+  initialData?: PaginatedResult<IVacancy>;
 }
 
 export function useVacancies(options?: UseVacanciesOptions) {
   const { filters = {}, initialData } = options ?? {};
 
+  const activeFilters = Object.keys(filters).length > 0;
+
   return useInfiniteQuery({
     queryKey: vacancyKeys.list(filters),
-    queryFn: ({ pageParam = 0 }) =>
-      vacancyApi.getList({ ...filters, skip: pageParam }),
-    initialPageParam: 0,
+
+    queryFn: ({ pageParam }) =>
+      vacancyApi.getList({
+        ...filters,
+        cursor: pageParam,
+      }),
+
+    initialPageParam: undefined as string | undefined,
+
     getNextPageParam: (lastPage) => {
-      if (!lastPage.hasMore) return undefined;
-      return (lastPage.skip ?? 0) + (lastPage.take ?? 10);
+      if (!lastPage.metadata?.hasMore || !lastPage.metadata?.nextCursor) {
+        return undefined;
+      }
+      return lastPage.metadata.nextCursor;
     },
-    initialData: initialData
-      ? { pages: [initialData], pageParams: [0] }
-      : undefined,
-    staleTime: 60 * 1000, // 1 хвилина
+
+    initialData:
+      initialData && !activeFilters
+        ? {
+            pages: [initialData],
+            pageParams: [undefined],
+          }
+        : undefined,
+
+    refetchOnMount: false,
+    staleTime: 1000 * 60 * 5,
   });
 }
-
