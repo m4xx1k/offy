@@ -6,7 +6,12 @@ import { useQueryClient } from "@tanstack/react-query";
 import { BarChart3, RefreshCw } from "lucide-react";
 import { useState } from "react";
 
-import { OverviewSection, SalaryStats, DescriptionStats } from "./sections";
+import {
+  OverviewSection,
+  SalaryStats,
+  DescriptionStats,
+  IngestAuditSection,
+} from "./sections";
 import {
   DailyStatsChart,
   EnglishLevelChart,
@@ -65,6 +70,12 @@ export function AnalyticsDashboard() {
         <OverviewSection />
       </section>
 
+      {/* Latest Ingest Audit */}
+      <section className="mb-8">
+        {/* fetch just the most recent item using cursor pagination with limit=1 */}
+        <IngestAuditSection />
+      </section>
+
       {/* Charts Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         <SourceStatsChart />
@@ -96,4 +107,3 @@ export function AnalyticsDashboard() {
     </div>
   );
 }
-

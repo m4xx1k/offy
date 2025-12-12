@@ -10,6 +10,7 @@ export {
   DescriptionStats,
   OverviewSection,
   SalaryStats,
+  IngestAudit,
 } from "./ui/sections";
 
 // Charts
@@ -32,4 +33,3 @@ export {
   StatCardSkeleton,
   TableSkeleton,
 } from "./ui/common";
-
