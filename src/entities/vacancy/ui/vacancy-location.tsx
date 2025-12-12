@@ -3,22 +3,22 @@ import { WorkFormat } from "@/shared/config/constants";
 import { Building2, Globe, Laptop, MapPin } from "lucide-react";
 import { formatCity, type Location } from "@/entities/location";
 import { formatWorkFormat } from "../lib/work-format";
+import { IVacancy } from "../model/types";
 
 interface VacancyLocationProps {
-  locations?: Location[];
-  workFormat?: string;
+  vacancy: IVacancy;
   showIcon?: boolean;
   asBadge?: boolean;
 }
 
 export function VacancyLocation({
-  locations,
-  workFormat,
+  vacancy,
   showIcon = true,
   asBadge = true,
 }: VacancyLocationProps) {
+  const locations = vacancy.locations?.map((loc) => loc.location);
   const city = formatCity(locations);
-  const format = workFormat;
+  const format = vacancy.workFormat;
 
   if (!city && !format) return null;
 
@@ -76,4 +76,3 @@ export function VacancyLocation({
     </div>
   );
 }
-

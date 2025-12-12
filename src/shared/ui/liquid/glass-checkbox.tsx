@@ -27,6 +27,7 @@ const GlassCheckbox = forwardRef<HTMLLabelElement, GlassCheckboxProps>(
           disabled && "opacity-50 cursor-not-allowed",
           className
         )}
+        onClick={() => !disabled && onCheckedChange(!checked)}
         {...props}
       >
         <div
@@ -41,7 +42,6 @@ const GlassCheckbox = forwardRef<HTMLLabelElement, GlassCheckboxProps>(
               : "bg-glass-bg border-glass-border group-hover:border-glass-accent/50",
             disabled && "pointer-events-none"
           )}
-          onClick={() => !disabled && onCheckedChange(!checked)}
           onKeyDown={(e) => {
             if (!disabled && (e.key === "Enter" || e.key === " ")) {
               e.preventDefault();

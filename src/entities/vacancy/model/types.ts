@@ -21,7 +21,12 @@ export interface IVacancy {
   postedAt: string;
   company?: Company;
   skills?: Array<{ skill: Skill }>;
-  locations?: Location[];
+  locations?: IVacancyLocation[];
+}
+export interface IVacancyLocation {
+  vacancyId: string;
+  locationId: string;
+  location: Location;
 }
 
 export type VacancyListItem = Pick<
@@ -65,4 +70,3 @@ export interface FiltersData {
 }
 
 export type WorkFormatType = "REMOTE" | "OFFICE" | "HYBRID";
-
