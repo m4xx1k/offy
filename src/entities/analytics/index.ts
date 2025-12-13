@@ -18,7 +18,6 @@ export {
   useTopCompanies,
   useTopLocations,
   useWorkFormatStats,
-  useAuditHistory,
 } from "./model/use-analytics";
 
 // Типи
@@ -34,6 +33,4 @@ export type {
   SalaryStats,
   SourceStats,
   WorkFormatStats,
-  IngestAudit,
-  IngestSourceStat,
 } from "./model/types";

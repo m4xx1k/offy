@@ -34,7 +34,7 @@ export function SalaryStats() {
           return (
             <div
               key={item.source}
-              className="p-4 rounded-xl bg-glass-bg border border-glass-border hover:bg-glass-hover transition-colors"
+              className="p-4 h-36 rounded-xl bg-glass-bg border border-glass-border hover:bg-glass-hover transition-colors"
             >
               <div className="flex items-center justify-between mb-4">
                 <h4 className="text-base font-medium text-glass-text">
@@ -97,4 +97,3 @@ export function SalaryStats() {
     </ChartCard>
   );
 }
-

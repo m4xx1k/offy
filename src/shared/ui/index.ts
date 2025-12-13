@@ -69,4 +69,7 @@ export {
 export { Input } from "./shadcn/input";
 export { ScrollArea, ScrollBar } from "./shadcn/scroll-area";
 export { Separator } from "./shadcn/separator";
-
+export { SourceBadge } from "./shadcn/source-badge";
+//Table
+export { DataTable } from "./table/table";
+export * from "./shadcn";

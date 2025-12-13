@@ -95,7 +95,10 @@ const GlassCardHeader = forwardRef<HTMLDivElement, GlassCardHeaderProps>(
     return (
       <div
         ref={ref}
-        className={cn("flex items-start justify-between mb-6", className)}
+        className={cn(
+          "flex items-start justify-between flex-col gap-4 md:gap-0 md:flex-row mb-6",
+          className
+        )}
         {...props}
       >
         <div>

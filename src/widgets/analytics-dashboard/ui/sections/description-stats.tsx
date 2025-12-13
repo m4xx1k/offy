@@ -25,22 +25,22 @@ export function DescriptionStats() {
 
   return (
     <ChartCard title="Статистика описів" subtitle="Довжина тексту вакансій">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="space-y-4">
         {data?.map((item) => (
           <div
             key={item.source}
-            className="p-4 rounded-xl bg-glass-bg border border-glass-border hover:bg-glass-hover transition-colors"
+            className="p-4 h-36 rounded-xl bg-glass-bg border border-glass-border hover:bg-glass-hover transition-colors"
           >
             <div className="flex items-center gap-2 mb-4">
-              <div className="p-2 rounded-lg bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-glass-border">
-                <FileText className="w-4 h-4 text-glass-accent" />
+              <div className="p-1.5 rounded-lg bg-linear-to-br from-indigo-500/10 to-purple-500/10 border border-glass-border">
+                <FileText className="w-3.5 h-3.5 text-glass-accent" />
               </div>
               <h4 className="font-medium text-glass-text">
                 {SOURCE_LABELS[item.source] || item.source}
               </h4>
             </div>
 
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-4 gap-2">
               <div className="p-2.5 rounded-lg bg-glass-bg text-center">
                 <div className="flex items-center justify-center gap-1 text-glass-text-subtle text-[10px] uppercase tracking-wider mb-1">
                   <ArrowUpDown className="w-2.5 h-2.5" />
@@ -87,4 +87,3 @@ export function DescriptionStats() {
     </ChartCard>
   );
 }
-

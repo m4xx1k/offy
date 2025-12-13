@@ -47,3 +47,7 @@ export function formatDateShort(dateString: string): string {
     month: "short",
   });
 }
+//ID
+export function formatUUID(uuid: string | null) {
+  return (uuid || "").substring(0, 6) + "...";
+}

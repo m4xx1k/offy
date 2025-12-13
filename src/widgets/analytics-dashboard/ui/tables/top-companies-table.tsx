@@ -1,6 +1,6 @@
 "use client";
 
-import { ScrollArea } from "@/shared/ui";
+import { DataTable, ScrollArea } from "@/shared/ui";
 import {
   createColumnHelper,
   flexRender,
@@ -121,43 +121,7 @@ export function TopCompaniesTable() {
 
   return (
     <ChartCard title="Топ компаній" subtitle="За кількістю вакансій">
-      <ScrollArea className="h-[360px] -mx-2 px-2">
-        <table className="w-full">
-          <thead className="sticky top-0 bg-slate-900/80 backdrop-blur-sm z-10">
-            {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id} className="border-b border-white/10">
-                {headerGroup.headers.map((header) => (
-                  <th
-                    key={header.id}
-                    className="text-left py-2.5 px-2 text-[10px] font-semibold text-slate-500 uppercase tracking-wider"
-                    style={{ width: header.getSize() }}
-                  >
-                    {flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    )}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody>
-            {table.getRowModel().rows.map((row) => (
-              <tr
-                key={row.id}
-                className="border-b border-white/5 hover:bg-white/[0.03] transition-colors group"
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id} className="py-2.5 px-2">
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </ScrollArea>
+      <DataTable table={table} />
     </ChartCard>
   );
 }
-

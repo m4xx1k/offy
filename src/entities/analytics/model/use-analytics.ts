@@ -1,11 +1,8 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { useInfiniteQuery } from "@tanstack/react-query";
 import { analyticsApi } from "../api/analytics.api";
 import type { AnalyticsQuery } from "./types";
-import type { IngestAudit } from "./types";
-import { PaginatedResult } from "@/entities/vacancy";
 
 export const analyticsKeys = {
   all: ["analytics"] as const,
@@ -109,21 +106,6 @@ export function useSalaryStats(source?: string) {
   return useQuery({
     queryKey: analyticsKeys.salaries(source),
     queryFn: () => analyticsApi.getSalaryStats(source),
-    staleTime: STALE_TIME,
-  });
-}
-export function useAuditHistory(limit = 20) {
-  return useInfiniteQuery<PaginatedResult<IngestAudit>>({
-    queryKey: analyticsKeys.auditHistory({ cursor: undefined, limit }),
-    queryFn: ({ pageParam }) =>
-      analyticsApi.getAuditHistory(pageParam as string | undefined, limit),
-    getNextPageParam: (lastPage) => {
-      if (!lastPage.metadata?.hasMore || !lastPage.metadata?.nextCursor) {
-        return undefined;
-      }
-      return lastPage.metadata.nextCursor;
-    },
-    initialPageParam: undefined as string | undefined,
     staleTime: STALE_TIME,
   });
 }
