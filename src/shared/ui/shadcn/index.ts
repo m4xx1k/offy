@@ -10,3 +10,5 @@ export * from "./input";
 export * from "./scroll-area";
 export * from "./separator";
 
+export * from "./calendar";
+export * from "./popover";

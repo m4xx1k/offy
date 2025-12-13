@@ -79,21 +79,3 @@ export interface AnalyticsQuery {
   endDate?: string;
   limit?: number;
 }
-
-export interface IngestSourceStat {
-  source: string;
-  status?: string;
-  itemsFound: number;
-  itemsSaved: number;
-  error?: string | null;
-}
-
-export interface IngestAudit {
-  id: string;
-  status: string;
-  startedAt: string;
-  endedAt?: string | null;
-  durationMs?: number | null;
-  errorMessage?: string | null;
-  sourceStats: IngestSourceStat[];
-}

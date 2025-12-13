@@ -6,12 +6,7 @@
 export { AnalyticsDashboard } from "./ui/analytics-dashboard";
 
 // Sections
-export {
-  DescriptionStats,
-  OverviewSection,
-  SalaryStats,
-  IngestAudit,
-} from "./ui/sections";
+export { DescriptionStats, OverviewSection, SalaryStats } from "./ui/sections";
 
 // Charts
 export {
